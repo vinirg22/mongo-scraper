@@ -1,11 +1,10 @@
 // Dependencies
 var express = require("express");
-// var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 var moment = require("moment");
 
-// Scraping tools
+// scraping dependencies
 var cheerio = require("cheerio");
 var request = require("request");
 
@@ -27,7 +26,6 @@ app.get("/", function(req, res) {
   res.send(index.html);
 });
 
-// Scraping route
 app.get("/scrape", function(req, res) {
   
   request("https://www.bignerdranch.com", function(error, response, html) {
