@@ -1,6 +1,6 @@
 // Dependencies
 var express = require("express");
-var bodyParser = require("body-parser");
+// var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 var moment = require("moment");
@@ -57,8 +57,8 @@ app.get("/scrape", function(req, res) {
 
         if(data === null) {
 
-          db.Article.create(result).then(function(dArticle) {
-            res.json(dArticle);
+          db.Article.create(result).then(function(dbArticle) {
+            res.json(dbArticle);
           });
         }
       }).catch(function(err) {
@@ -76,8 +76,8 @@ app.get("/articles", function(req, res) {
   db.Article
     .find({})
     .sort({newArticle:-1})
-    .then(function(dArticle) {
-      res.json(dArticle);
+    .then(function(dbArticle) {
+      res.json(dbArticle);
     })
     .catch(function(err) {
       res.json(err);
@@ -90,8 +90,8 @@ app.get("/articles/:id", function(req, res) {
   db.Article
     .findOne({ _id: req.params.id })
     .populate("note")
-    .then(function(dArticle) {
-      res.json(dArticle);
+    .then(function(dbArticle) {
+      res.json(dbArticle);
     })
     .catch(function(err) {
       res.json(err);
@@ -106,8 +106,8 @@ app.post("/articles/:id", function(req, res) {
     .then(function(dbNote) {
       return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
     })
-    .then(function(dArticle) {
-      res.json(dArticle);
+    .then(function(dbArticle) {
+      res.json(dbArticle);
     })
     .catch(function(err) {
       res.json(err);
@@ -119,8 +119,8 @@ app.put("/saved/:id", function(req, res) {
 
   db.Article
     .findByIdAndUpdate({ _id: req.params.id }, { $set: { isSaved: true }})
-    .then(function(dArticle) {
-      res.json(dArticle);
+    .then(function(dbArticle) {
+      res.json(dbArticle);
     })
     .catch(function(err) {
       res.json(err);
@@ -132,8 +132,8 @@ app.get("/saved", function(req, res) {
 
   db.Article
     .find({ isSaved: true })
-    .then(function(dArticle) {
-      res.json(dArticle);
+    .then(function(dbArticle) {
+      res.json(dbArticle);
     })
     .catch(function(err) {
       res.json(err);
@@ -145,8 +145,8 @@ app.put("/delete/:id", function(req, res) {
 
   db.Article
     .findByIdAndUpdate({ _id: req.params.id }, { $set: { isSaved: false }})
-    .then(function(dArticle) {
-      res.json(dArticle);
+    .then(function(dbArticle) {
+      res.json(dbArticle);
     })
     .catch(function(err) {
       res.json(err);
